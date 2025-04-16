@@ -1,0 +1,32 @@
+﻿@model ReservasColegio.Models.Usuario
+@{
+    ViewData["Title"] = "Editar Perfil";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h3 class="mb-4">Editar Perfil</h3>
+
+    @if (TempData["Sucesso"] != null)
+    {
+        <div class="alert alert-success">@TempData["Sucesso"]</div>
+    }
+
+    <form asp-action="EditarPerfil" method="post">
+        <div class="mb-3">
+            <label asp-for="Nome" class="form-label"></label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Departamento" class="form-label"></label>
+            <input asp-for="Departamento" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a asp-action="Perfil" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

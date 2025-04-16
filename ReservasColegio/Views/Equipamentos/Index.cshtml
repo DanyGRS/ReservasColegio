@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ReservasColegio.Models.Equipamento>
+
+@{
+    ViewData["Title"] = "Equipamentos";
+}
+<br />
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0"><i class="bi bi-hdd-network"></i> Equipamentos</h2>
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> Novo Equipamento
+    </a>
+</div>
+
+<table class="table table-hover table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Tipo)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Descricao)</th>
+            <th>@Html.DisplayNameFor(model => model.First().IdentificacaoPatrimonio)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Disponivel)</th>
+            <th class="text-center">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Tipo</td>
+                <td>@item.Descricao</td>
+                <td>@item.IdentificacaoPatrimonio</td>
+                <td>
+                    @if (item.Disponivel)
+                    {
+                        <span class="badge bg-success">Sim</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Não</span>
+                    }
+                </td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary me-1">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white me-1">
+                        <i class="bi bi-info-circle"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

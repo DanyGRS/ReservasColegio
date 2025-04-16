@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Meu Perfil";
+    var roles = ViewBag.Roles as List<string>;
+    var permissoes = ViewBag.Permissoes as List<string>;
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">Informações do Usuário</h2>
+
+    <div class="card p-3 shadow-sm">
+        <p><strong>Nome:</strong> @ViewBag.Nome</p>
+        <p><strong>Email:</strong> @ViewBag.Email</p>
+        <p><strong>Diretiva/Roles:</strong> @string.Join(", ", roles ?? new List<string>())</p>
+
+        <hr />
+
+        <h5>Permissões:</h5>
+        @if (permissoes != null && permissoes.Any())
+        {
+            <ul>
+                @foreach (var perm in permissoes)
+                {
+                    <li>@perm</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">Nenhuma permissão atribuída.</p>
+        }
+
+        <div class="text-end mt-3">
+            <a href="/Home/EditarPerfil" class="btn btn-primary">Editar Perfil</a>
+        </div>
+    </div>
+</div>

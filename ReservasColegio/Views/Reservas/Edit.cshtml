@@ -1,0 +1,85 @@
+﻿@model ReservasColegio.Models.Reserva
+
+@{
+    ViewData["Title"] = "Editar Reserva";
+    var role = ViewBag.Role as string;
+    int usuarioLogadoId = (int)(ViewBag.UsuarioLogadoId ?? 0);
+    bool podeEditarStatus = role == "admin";
+    bool podeEditarUsuario = role == "admin";
+}
+
+<h1>Editar Reserva</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            @if (podeEditarUsuario)
+            {
+                <div class="form-group mb-3">
+                    <label for="UsuarioId" class="form-label">Usuário</label>
+                    <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                    <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group mb-3">
+                    <label class="form-label">Usuário</label>
+                    <input type="text" class="form-control" value="@Model.Usuario.Nome" disabled />
+                    <input type="hidden" asp-for="UsuarioId" />
+                </div>
+            }
+
+            <div class="form-group mb-3">
+                <label for="EquipamentoId" class="form-label">Equipamento</label>
+                <select asp-for="EquipamentoId" class="form-control" asp-items="ViewBag.EquipamentoId"></select>
+                <span asp-validation-for="EquipamentoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="DataReserva" class="form-label">Data da Reserva</label>
+                <input asp-for="DataReserva" class="form-control" />
+                <span asp-validation-for="DataReserva" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="HoraInicio" class="form-label">Hora de Início</label>
+                <input asp-for="HoraInicio" class="form-control" />
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="HoraFim" class="form-label">Hora de Término</label>
+                <input asp-for="HoraFim" class="form-control" />
+                <span asp-validation-for="HoraFim" class="text-danger"></span>
+            </div>
+
+            @if (podeEditarStatus)
+            {
+                <div class="form-group mb-4">
+                    <label for="Status" class="form-label">Status da Reserva</label>
+                    <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<ReservasColegio.Models.StatusReserva>()"></select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" asp-for="Status" />
+            }
+
+            <div class="form-group d-flex justify-content-between">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

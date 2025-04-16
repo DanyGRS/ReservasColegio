@@ -1,0 +1,36 @@
+﻿@model ReservasColegio.Models.Usuario
+
+@{
+    ViewData["Title"] = "Cadastrar Novo Usuário";
+}
+
+<div class="container mt-4">
+    <h2>Cadastrar Novo Usuário</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Nome" class="form-label"></label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Departamento" class="form-label"></label>
+            <input asp-for="Departamento" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Diretiva</label>
+            <select asp-for="DiretivaId" asp-items="ViewBag.DiretivaId" class="form-select"></select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Senha</label>
+            <input type="password" name="Senha" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

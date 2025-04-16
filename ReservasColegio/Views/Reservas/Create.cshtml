@@ -1,0 +1,68 @@
+﻿@model ReservasColegio.Models.Reserva
+@{
+    ViewData["Title"] = "Criar Reserva";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Nova Reserva de Equipamento</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form asp-action="Create" method="post" class="needs-validation" novalidate>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="EquipamentoId" class="form-label">Equipamento</label>
+                <select asp-for="EquipamentoId" class="form-select" asp-items="ViewBag.EquipamentoId">
+                    <option value="">Selecione um equipamento</option>
+                </select>
+                <span asp-validation-for="EquipamentoId" class="text-danger"></span>
+            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="mb-3">
+                    <label class="form-label">Usuário</label>
+                    <select asp-for="UsuarioId" asp-items="ViewBag.UsuarioId" class="form-select"></select>
+                </div>
+            }
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label asp-for="DataReserva" class="form-label">Data da Reserva</label>
+                <input asp-for="DataReserva" type="date" class="form-control" />
+                <span asp-validation-for="DataReserva" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="HoraInicio" class="form-label">Hora de Início</label>
+                <input asp-for="HoraInicio" type="time" class="form-control" />
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="HoraFim" class="form-label">Hora de Término</label>
+                <input asp-for="HoraFim" type="time" class="form-control" />
+                <span asp-validation-for="HoraFim" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-success">Salvar Reserva</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

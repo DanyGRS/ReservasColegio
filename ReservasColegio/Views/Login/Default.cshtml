@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "_LayoutLogin";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            width: 84rem;
+            align-items: center;
+        }
+
+        .box-signin {
+            width: 34rem;
+            height: auto;
+            background-color: rgb(255 255 255 / 22%);
+            color: white;
+            border-radius: 40px;
+            padding: 20px;
+        }
+
+        .span-campos {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+            .span-campos input {
+                border-radius: 15px;
+                border: none;
+                background-color: rgb(255 255 255 / 30%);
+                width: 20rem;
+                height: 2.2rem;
+                padding-left: 10px;
+            }
+
+        .span-submit {
+            flex-grow: 1;
+            align-self: center;
+            align-content: flex-end;
+        }
+
+            .span-submit input {
+                width: 10rem;
+                height: 2.2rem;
+                background-color: #ef6b48;
+                color: white;
+                border: none;
+                border-radius: 15px;
+            }
+
+        .img-login {
+            width: 42rem;
+            height: 42rem;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" asp-action="Login">
+
+        <div class="container">
+            <div>
+                <img class="img-login" src="~/images/Mobile login-amico.png" />
+            </div>
+
+            <div class="box-signin d-flex flex-column align-items-center justify-content-center">
+                <h2 style="flex-grow: 1;"><strong>Sign-in</strong></h2>
+                @if (TempData["Erro"] != null)
+                {
+                    <div style="background-color: rgb(255 0 0 / 25%); color: white; padding: 10px 15px; border-radius: 12px; width: 100%; text-align: center; font-size: 0.9rem; margin-bottom: 10px;">
+                        @TempData["Erro"]
+                    </div>
+                }
+
+                <span class="span-campos">
+                    <label>Email:</label>
+                    <input type="email" name="email" />
+                </span>
+                <span class="span-campos">
+                    <label>Password:</label>
+                    <input type="password" name="password" />
+                    <a href="/Login/EsqueciSenha" class="text-reset">Esqueci minha senha</a>
+                </span>
+                <span class="span-submit">
+                    <input type="submit" value="Login" />
+                </span>
+
+                <div class="text-center mt-3" style="font-size: 0.9rem; color: white;">
+                    <i class="bi bi-info-circle-fill"></i>
+                    Não possui uma conta? Solicite à administração da escola para criar seu usuário.
+                </div>
+
+            </div>
+        </div>
+    </form>
+</body>
+</html>

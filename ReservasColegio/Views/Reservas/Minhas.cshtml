@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ReservasColegio.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Minhas Reservas";
+}
+<br />
+<h2>Minhas Reservas</h2>
+
+@if (TempData["Erro"] != null)
+{
+    <div class="alert alert-danger">@TempData["Erro"]</div>
+}
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["Sucesso"]</div>
+}
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Data</th>
+            <th>Hora Início</th>
+            <th>Hora Fim</th>
+            <th>Status</th>
+            <th>Equipamento</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DataReserva.ToShortDateString()</td>
+                <td>@item.HoraInicio.ToString("HH:mm")</td>
+                <td>@item.HoraFim.ToString("HH:mm")</td>
+                <td>@item.Status</td>
+                <td>@item.Equipamento?.Nome</td>
+                <td>
+                    @if (item.DataReserva.Date >= DateTime.Today && item.Status == ReservasColegio.Models.StatusReserva.Pendente)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">Editar</a>
+
+                        <form asp-action="Cancelar" asp-route-id="@item.Id" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Deseja realmente cancelar esta reserva?');">
+                                Cancelar
+                            </button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

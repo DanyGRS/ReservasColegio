@@ -1,0 +1,38 @@
+﻿html {
+    background-color: #698779;
+}
+body {
+    background-color: transparent;
+}
+footer{
+    background-color:white;
+}
+.title {
+    color: white;
+    font-family: serif;
+}
+
+.div-import {
+    border-radius: 10px;
+    width: 45rem;
+    height: 16rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    margin: 10rem 0px;
+    background-color: white;
+    flex-direction: column;
+}
+
+.container a {
+    color: #698779;
+}
+
+.container p > a{
+    color:#fff;
+}
+
+.btn-primary, .btn-secondary, .btn-danger, .btn-warning, .btn-success {
+    color: white !important;
+}

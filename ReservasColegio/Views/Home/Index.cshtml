@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Início";
+    var nomeUsuario = User.Identity?.Name ?? "Usuário";
+    var role = User.IsInRole("Admin") ? "Administrador" : "Funcionário";
+}
+<style>
+    p a {
+        color: #fff !important;
+    }
+</style>
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Bem-vindo, @nomeUsuario!</h1>
+        <p class="text-muted">Você está acessando o sistema como <strong>@role</strong>.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        @if (User.IsInRole("Funcionario") || User.IsInRole("Admin"))
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Nova Reserva</h5>
+                        <p class="card-text text-muted">Solicite um equipamento para sua aula ou apresentação.</p>
+                        <a href="/Reservas/Create" class="btn btn-primary">Fazer Reserva</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Minhas Reservas</h5>
+                        <p class="card-text text-muted">Consulte o histórico e o status das suas reservas.</p>
+                        <a href="/Reservas/Minhas" class="btn btn-outline-primary">Ver Reservas</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Painel Administrativo</h5>
+                        <p class="card-text text-muted">Gerencie usuários, permissões e equipamentos.</p>
+                        <a href="/Usuarios/Index" class="btn btn-warning">Acessar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

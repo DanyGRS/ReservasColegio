@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ReservasColegio.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Reservas";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Reservas</h2>
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="dataInicio" class="form-label">Data Início</label>
+            <input type="date" name="dataInicio" id="dataInicio" class="form-control" value="@ViewData["DataInicio"]" />
+        </div>
+        <div class="col-md-4">
+            <label for="dataFim" class="form-label">Data Fim</label>
+            <input type="date" name="dataFim" id="dataFim" class="form-control" value="@ViewData["DataFim"]" />
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+            <a asp-action="Index" class="btn btn-secondary">Limpar</a>
+        </div>
+    </form>
+
+
+
+    @if (TempData["Sucesso"] != null)
+    {
+        <div class="alert alert-success">@TempData["Sucesso"]</div>
+    }
+
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Erro"]</div>
+    }
+
+    <div class="mb-3">
+        <a asp-action="Create" class="btn btn-primary">Nova Reserva</a>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Usuário</th>
+                <th>Equipamento</th>
+                <th>Data</th>
+                <th>Hora Início</th>
+                <th>Hora Fim</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Usuario?.Email</td>
+                    <td>@item.Equipamento?.Nome</td>
+                    <td>@item.DataReserva.ToString("dd/MM/yyyy")</td>
+                    <td>@item.HoraInicio.ToString("HH:mm")</td>
+                    <td>@item.HoraFim.ToString("HH:mm")</td>
+                    <td>
+                        <span class="badge bg-@GetBadgeClass(item.Status)">
+                            @item.Status
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-1">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Detalhes</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Excluir</a>
+
+                            @if (item.Status == ReservasColegio.Models.StatusReserva.Pendente && User.IsInRole("Admin"))
+                            {
+                                <form asp-action="Aprovar" asp-route-id="@item.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-success">Aprovar</button>
+                                </form>
+                                <form asp-action="Cancelar" asp-route-id="@item.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-secondary">Cancelar</button>
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@functions {
+    string GetBadgeClass(ReservasColegio.Models.StatusReserva status)
+    {
+        return status switch
+        {
+            ReservasColegio.Models.StatusReserva.Pendente => "secondary",
+            ReservasColegio.Models.StatusReserva.Aprovada => "success",
+            ReservasColegio.Models.StatusReserva.EmUso => "info",
+            ReservasColegio.Models.StatusReserva.Concluida => "primary",
+            ReservasColegio.Models.StatusReserva.Expirada => "warning",
+            ReservasColegio.Models.StatusReserva.Cancelada => "danger",
+            _ => "dark"
+        };
+    }
+}
