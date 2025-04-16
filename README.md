@@ -22,14 +22,6 @@ Este sistema foi desenvolvido em ASP.NET Core para ajudar no controle de emprés
 
 ---
 
-## Conceitos de POO Utilizados
-- Classes e objetos como `Usuario`, `Reserva`, `Equipamento`
-- Encapsulamento com validações via anotações
-- Polimorfismo com enums e permissões por perfil
-- Herança planejada para futuras melhorias
-
----
-
 ## Regras de Permissão
 - Apenas administradores podem alterar o status ou usuário da reserva
 - Funcionários só podem editar suas próprias reservas pendentes
